@@ -13,6 +13,8 @@ docker-compose up
 # check availability
 http://localhost:4566/health
 ```
+> [Localstack Guide](https://github.com/HakimiX/localstack-playground)
+
 3. Bootstrap CDK environment _(localstack must be running)_
 ```shell
 cdklocal bootstrap
