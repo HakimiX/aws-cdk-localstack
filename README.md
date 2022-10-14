@@ -22,8 +22,24 @@ cdklocal bootstrap
 ```
 
 ### Deploy 
+**Deploy** CDK infrastructure 
+```shell
+cdklocal deploy
+```
+**Invoke** API Gateway
+```shell
+# endpoint: /something 
+curl -XPOST "https://<api-gateway>.localstack.cloud:4566/prod/something" -d "{\"name\":\"bob\"}"
+
+# endpoint: /another
+curl "https://<api-gateway>.localhost.localstack.cloud:4566/prod/another"
+```
+
+
+### cdklocal commands
 ```shell
 cdklocal ls
+cdklocal synth
 cdklocal diff
 cdklocal deploy
 cdklocal destroy
