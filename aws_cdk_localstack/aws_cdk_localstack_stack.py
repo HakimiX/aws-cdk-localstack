@@ -22,6 +22,7 @@ class AwsCdkLocalstackStack(Stack):
                 ),
             ],
         )
+        
         lambda_function = lambda_.Function(
             self, 'localstackLambda',
             runtime=lambda_.Runtime.PYTHON_3_9,
