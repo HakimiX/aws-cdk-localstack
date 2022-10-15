@@ -7,10 +7,12 @@ npm install -g aws-cdk-local aws-cdk
 ```
 2. Start localstack 
 ```shell
-cd localstack-playground
-docker-compose up
+localstack start # do not use localstack with docker-compose due to issues with ecr
 
-# check availability
+# Status
+localstack status services
+
+# Check availability
 http://localhost:4566/health
 ```
 > [Localstack Guide](https://github.com/HakimiX/localstack-playground)
@@ -37,6 +39,14 @@ curl -XPOST "https://<api-gateway>.localhost.localstack.cloud:4566/prod/somethin
 curl "https://<api-gateway>.localhost.localstack.cloud:4566/prod/another"
 ```
 
+### Destroying and deploying again
+Whenever you destroy the stack, you HAVE to bootstrap the environment
+again before deploying.
+```shell
+cdklocal destroy
+cdklocal bootstrap
+cdklocal deploy
+```
 
 ### cdklocal commands
 ```shell

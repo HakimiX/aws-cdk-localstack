@@ -1,4 +1,5 @@
 from aws_cdk import (
+    Duration,
     Stack,
     aws_iam as iam,
     aws_lambda as lambda_,
@@ -23,13 +24,26 @@ class AwsCdkLocalstackStack(Stack):
             ],
         )
         
-        lambda_function = lambda_.Function(
-            self, 'localstackLambda',
-            runtime=lambda_.Runtime.PYTHON_3_9,
-            handler="lambda.handler",
-            role=lambda_role,
-            code=lambda_.Code.from_asset('lambda'))
+        #lambda_function = lambda_.Function(
+        #    self, 'localstackLambda',
+        #    runtime=lambda_.Runtime.PYTHON_3_9,
+        #    handler="lambda.handler",
+        #    role=lambda_role,
+        #    code=lambda_.Code.from_asset('lambda'))
 
+        lambda_function = lambda_.DockerImageFunction(
+            self,
+            'localstackDockerLambda',
+            timeout=Duration.minutes(15),
+            code=lambda_.DockerImageCode.from_image_asset(
+                directory='./lambda_container',
+                file='Dockerfile'
+            ),
+            role=lambda_role,
+            environment={
+                "SOMETHING": "bob1234"
+            }
+        )
         
         api = api_gw.RestApi(
             self,

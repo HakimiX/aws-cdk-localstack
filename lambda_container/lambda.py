@@ -8,5 +8,5 @@ def handler(event, context):
 
   return {
     "statusCode": 200,
-    "body": "this is a message from the lambda!"
+    "body": "A message from the docker lambda!"
   }
