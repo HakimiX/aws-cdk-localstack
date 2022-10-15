@@ -48,15 +48,6 @@ cdklocal bootstrap
 cdklocal deploy
 ```
 
-### cdklocal commands
-```shell
-cdklocal ls
-cdklocal synth
-cdklocal diff
-cdklocal deploy
-cdklocal destroy
-```
-
 ### Sources
 
 * [Localstack Guide](https://dev.to/_mikigraf/localstack-cdk-local-aws-development-58ff)
