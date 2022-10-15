@@ -44,6 +44,20 @@ class AwsCdkLocalstackStack(Stack):
                 "SOMETHING": "bob1234"
             }
         )
+
+        another_lambda_function = lambda_.DockerImageFunction(
+            self,
+            'localstackAnotherDockerLambda',
+            timeout=Duration.minutes(15),
+            code=lambda_.DockerImageCode.from_image_asset(
+                directory='./another_lambda_container',
+                file='Dockerfile'
+            ),
+            role=lambda_role,
+            environment={
+                "SOMETHING": "bob1234"
+            }
+        )
         
         api = api_gw.RestApi(
             self,
@@ -61,13 +75,28 @@ class AwsCdkLocalstackStack(Stack):
             }
         )
 
+        another_integration = api_gw.LambdaIntegration(
+            handler=another_lambda_function,
+            proxy=True,
+            allow_test_invoke=True,
+            request_templates={
+                "application/json": "$input.body"
+            }
+        )
+
         resource = api.root.add_resource("something")
         resource.add_method(
             "POST",
             integration=integration
         )
 
-        index_resource = api.root.add_resource('another')
+        another_resource = api.root.add_resource("another")
+        another_resource.add_method(
+            "POST",
+            integration=another_integration
+        )
+
+        index_resource = api.root.add_resource("hello")
         index_resource.add_method(
             "GET",
             integration=integration
